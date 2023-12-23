@@ -1,0 +1,226 @@
+<UserControl x:Class="Calculator3.Views.CalculatorView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Calculator3.ViewModels"
+			 xmlns:system="using:System"
+			 mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="460"
+			 MaxWidth="580" MaxHeight="460"
+			 MinWidth="580" MinHeight="460"
+			 Background="#e5ebe9"
+             x:CompileBindings="False"
+             x:DataType="vm:CalculatorViewModel">
+
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:CalculatorViewModel/>
+	</Design.DataContext>
+
+	<UserControl.Styles>
+
+		<Style Selector="Button">
+			<Setter Property="HorizontalContentAlignment" Value="Center" />
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="Height" Value="35" />
+			<Setter Property="BorderThickness" Value="2" />
+			<Setter Property="Background" Value="#eeeeee" />
+			<Setter Property="BorderBrush" Value="Gray" />
+			<Setter Property="FontWeight" Value="Medium"/>
+			<Setter Property="FontSize" Value="15"/>
+		</Style>
+
+		<Style Selector="Button.small">
+			<Setter Property="Width" Value="60" />
+			<Setter Property="Command" Value="{Binding AddCommand}"/>
+		</Style>
+
+		<Style Selector="Button.big">
+			<Setter Property="Width" Value="120" />
+		</Style>
+
+		<Style Selector="Button.number">
+			<Setter Property="Background" Value="White" />
+		</Style>
+
+		<Style Selector="Border">
+			<Setter Property="CornerRadius" Value="5"/>
+			<Setter Property="BoxShadow" Value="2 2 5 0 #b4b4b4" />
+			<Setter Property="Margin" Value="0 0 2 0" />
+		</Style>	
+		
+	</UserControl.Styles>
+
+
+	<StackPanel Margin="14">
+		<StackPanel Orientation="Horizontal">
+			<StackPanel Orientation="Vertical">
+				<Button Width="80" Height="30" Margin="0 0 0 5">
+					<Button.Content>
+						select
+					</Button.Content>
+					
+				</Button>
+				<Button Width="80" Height="30" Margin="0 0 0 5">?</Button>
+				<Button Width="80" Height="30" Margin="0 0 0 5">clear</Button>
+			</StackPanel>
+			<Border BorderBrush="Gray" Width="465"
+					BorderThickness="2"
+					Margin="5 0 0 10">
+				<Grid Height="100">
+					<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+						<ListBox ItemsSource="{Binding History}" Name="Item">
+							<ListBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding}"
+											   FontSize="10"
+											   TextAlignment="Right"/>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+					</ScrollViewer>
+				</Grid>
+
+			</Border>
+		</StackPanel>
+
+		<Border BorderBrush="Gray"
+				BorderThickness="2"
+				Margin="0 5">
+			<TextBlock Margin="2"
+					   Height="100"
+					   Background="White"
+					   Text="{Binding ShownExpression}"
+					   TextWrapping="Wrap"
+					   TextAlignment="Right" />
+		</Border>
+
+		<StackPanel Orientation="Horizontal"
+					Margin="0 0 0 5">
+			<Border>
+				<Button Classes="small , number" CommandParameter="7">7</Button>
+			</Border>
+			<Border>
+				<Button Classes="small , number" CommandParameter="8">8</Button>
+			</Border>
+			<Border>
+				<Button Classes="small , number" CommandParameter="9">9</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="/">/</Button>
+			</Border>
+			<Border>
+				<Button Classes ="big" Command="{Binding ClearCommand}"
+						Background="#f99876">C</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="ln">ln</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="acos">acos</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="cos">cos</Button>
+			</Border>
+		</StackPanel>
+
+		<StackPanel Orientation="Horizontal"
+					Margin="0 0 0 5">
+			<Border>
+				<Button Classes="small , number" CommandParameter="4">4</Button>
+			</Border>
+			<Border>
+				<Button Classes="small , number" CommandParameter="5">5</Button>
+			</Border>
+			<Border>
+				<Button Classes="small , number" CommandParameter="6">6</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="*">*</Button>
+			</Border>
+			<Border>
+				<Button Classes ="big" Command="{Binding BackSpaceCommand}"
+						Background="Aquamarine">BackSpace</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="log">log</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="asin">asin</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="sin">sin</Button>
+			</Border>
+		</StackPanel>
+
+		<StackPanel Orientation="Horizontal"
+					Margin="0 0 0 5">
+			<Border>
+				<Button Classes="small , number" CommandParameter="1">1</Button>
+			</Border>
+			<Border>
+				<Button Classes="small , number" CommandParameter="2">2</Button>
+			</Border>
+			<Border>
+				<Button Classes="small , number" CommandParameter="3">3</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="+">+</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="sqrt">sqrt</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="mod">mod</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter=".e+0">exp</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="atan">atan</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="tan">tan</Button>
+			</Border>
+		</StackPanel>
+
+		<StackPanel Orientation="Horizontal"
+					Margin="0 0 0 5">
+			<Border>
+				<Button Classes="small" CommandParameter=".">.</Button>
+			</Border>
+			<Border>
+				<Button Classes="small , number" CommandParameter="0">0</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="^">^</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="-">-</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="(">(</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter=")">)</Button>
+			</Border>
+			<Border>
+				<Button Classes="small" CommandParameter="X">X</Button>
+			</Border>
+			<Border>
+				<TextBox Width="122" Watermark="Input X value"
+						 Background="White"
+						 Text="{Binding XValue, Mode=TwoWay}"> </TextBox>
+			</Border>
+		</StackPanel>
+
+		<StackPanel>
+			<Border>
+				<Button Content="=" Width="552" Background="#fff5d5"
+						Command="{Binding EqualCommand}"></Button>
+			</Border>
+		</StackPanel>
+	</StackPanel>
+
+</UserControl>
