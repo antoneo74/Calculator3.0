@@ -4,7 +4,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Calculator3.ViewModels"
-			 xmlns:system="using:System"
 			 mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="460"
 			 MaxWidth="580" MaxHeight="460"
 			 MinWidth="580" MinHeight="460"
@@ -46,42 +45,46 @@
 
 		<Style Selector="Border">
 			<Setter Property="CornerRadius" Value="5"/>
-			<Setter Property="BoxShadow" Value="2 2 5 0 #b4b4b4" />
+			<Setter Property="BoxShadow" Value="5 5 15 3 #b4b4b4" />
 			<Setter Property="Margin" Value="0 0 2 0" />
 		</Style>	
-		
+
 	</UserControl.Styles>
 
 
 	<StackPanel Margin="14">
 		<StackPanel Orientation="Horizontal">
-			<StackPanel Orientation="Vertical">
-				<Button Width="80" Height="30" Margin="0 0 0 5">
-					<Button.Content>
+			<Grid  RowDefinitions="Auto, Auto, Auto" VerticalAlignment="Stretch">
+				<Border Grid.Row="0" Height="30" Margin="2 0 0 0">
+					<Button FontSize="10" Width="80" Height="30" 
+							Command="{Binding SelectHistoryItem}">
 						select
-					</Button.Content>
-					
-				</Button>
-				<Button Width="80" Height="30" Margin="0 0 0 5">?</Button>
-				<Button Width="80" Height="30" Margin="0 0 0 5">clear</Button>
-			</StackPanel>
-			<Border BorderBrush="Gray" Width="465"
+					</Button>
+				</Border>
+				<Border Grid.Row="1" Height="30" Margin="2 3 0 0">
+					<Button Width="80" Height="30">?</Button>
+				</Border>
+				<Border Grid.Row="2" Height="30" Margin="2 3 0 0">
+					<Button FontSize="10" Width="80" Height="30" >clear</Button>
+				</Border>
+			</Grid>
+			
+			<Border BorderBrush="Gray" Width="465" Height="100"
 					BorderThickness="2"
 					Margin="5 0 0 10">
-				<Grid Height="100">
-					<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-						<ListBox ItemsSource="{Binding History}" Name="Item">
-							<ListBox.ItemTemplate>
-								<DataTemplate>
-									<TextBlock Text="{Binding}"
-											   FontSize="10"
-											   TextAlignment="Right"/>
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-						</ListBox>
-					</ScrollViewer>
-				</Grid>
 
+				<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+					<ListBox SelectedIndex="{Binding SelectedIndex}" Margin="1" ItemsSource="{Binding History}">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding}"
+										   FontSize="9"
+										   
+										   TextAlignment="Right"/>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</ScrollViewer>
 			</Border>
 		</StackPanel>
 

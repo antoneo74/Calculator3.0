@@ -2,8 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="using:Calculator3.ViewModels"
+			 xmlns:vm="clr-namespace:Calculator3.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Calculator3.Views.ChartsView">
-  Welcome to Avalonia!
+			 x:DataType="vm:ChartsViewModel"
+			x:Class="Calculator3.Views.ChartsView">
+	Welcome to Avalonia!
 </UserControl>

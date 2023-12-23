@@ -6,54 +6,44 @@ namespace Calculator3.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public ICommand NavigateCalculator { get; }
-        public ICommand NavigateCharts { get; }
-        public ICommand NavigateCredit { get; }
-        public ICommand NavigateDeposit { get; }
+        private ViewModelBase _calculatorPage;
+        private ViewModelBase _chartsPage;
+        private ViewModelBase _creditPage;
+        private ViewModelBase _depositPage;
 
-        
+
 
         public MainWindowViewModel()
-        {
-            // Set current page to first on start up
-            CurrentPage = new CalculatorViewModel();            
-
-            NavigateCalculator = ReactiveCommand.Create(Calculator);
-            NavigateCharts = ReactiveCommand.Create(Charts);
-            NavigateCredit = ReactiveCommand.Create(Credit);
-            NavigateDeposit = ReactiveCommand.Create(Deposit);
+        {            
+            _calculatorPage = new CalculatorViewModel();            
+            _chartsPage = new ChartsViewModel();
+            _creditPage = new CreditViewModel();
+            _depositPage = new DepositViewModel();            
         }
 
-        private void Deposit()
+        
+        public ViewModelBase CalculatorPage
         {
-            CurrentPage = new DepositViewModel();
+            get { return _calculatorPage; }
+            private set { this.RaiseAndSetIfChanged(ref _calculatorPage, value); }
         }
 
-        private void Credit()
+        public ViewModelBase ChartsPage
         {
-            CurrentPage = new CreditViewModel();
+            get { return _chartsPage; }
+            private set { this.RaiseAndSetIfChanged(ref _chartsPage, value); }
         }
 
-        private void Charts()
+        public ViewModelBase CreditPage
         {
-            CurrentPage = new ChartsViewModel();
+            get { return _creditPage; }
+            private set { this.RaiseAndSetIfChanged(ref _creditPage, value); }
         }
 
-        private void Calculator()
+        public ViewModelBase DepositPage
         {
-            CurrentPage = new CalculatorViewModel();
-        }
-
-        // The default is the first page
-        private ViewModelBase _CurrentPage;
-
-        /// <summary>
-        /// Gets the current page. The property is read-only
-        /// </summary>
-        public ViewModelBase CurrentPage
-        {
-            get { return _CurrentPage; }
-            private set { this.RaiseAndSetIfChanged(ref _CurrentPage, value); }
+            get { return _depositPage; }
+            private set { this.RaiseAndSetIfChanged(ref _depositPage, value); }
         }
     }
 }

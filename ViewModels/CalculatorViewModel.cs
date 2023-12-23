@@ -12,13 +12,6 @@ namespace Calculator3.ViewModels
 {
     public class CalculatorViewModel:ViewModelBase
     {
-        private ObservableCollection<string> _history;
-        public ObservableCollection<string> History
-        {
-            get => _history;
-            set => this.RaiseAndSetIfChanged(ref _history, value); 
-        }
-
         private List<string> _tokens;
 
         private string _expression;
@@ -28,12 +21,58 @@ namespace Calculator3.ViewModels
         private int _open_brackets = 0;
 
         private IntPtr calc;
+
+        private int _selectedIndex;
+
+        private ObservableCollection<string> _history;
+
         public ReactiveCommand<string, Unit> AddCommand { get; }
         public ReactiveCommand<Unit, Unit> ClearCommand { get; }
         public ReactiveCommand<Unit, Unit> BackSpaceCommand { get; }
         public ReactiveCommand<Unit, Unit> EqualCommand { get; }
+
+
+        public CalculatorViewModel()
+        {
+            AddCommand = ReactiveCommand.Create<string>(Add);
+
+            ClearCommand = ReactiveCommand.Create(Clear);
+
+            BackSpaceCommand = ReactiveCommand.Create(BackSpace);
+
+            EqualCommand = ReactiveCommand.Create(Equal);
+
+            //SelectedIndexCommand = ReactiveCommand.Create<int>(Selected);
+
+            calc = LibraryImport_x64.Constructor();
+
+            _history = new ObservableCollection<string>();
+
+            _tokens = new();
+
+            Clear();
+        }
+
         
-        //public ReactiveCommand<Unit, Unit> HistoryCommand { get; }
+        public ObservableCollection<string> History
+        {
+            get => _history;
+            set => this.RaiseAndSetIfChanged(ref _history, value); 
+        }
+        
+        
+        public int SelectedIndex
+        {
+            get => _selectedIndex;
+            set => this.RaiseAndSetIfChanged(ref _selectedIndex, value);
+        }
+
+        public void SelectHistoryItem()
+        {
+            
+            ShownExpression = History[SelectedIndex];
+        }
+
 
         public string ShownExpression
         {
@@ -50,30 +89,9 @@ namespace Calculator3.ViewModels
 
         
         
-        public CalculatorViewModel()
-        {
-            AddCommand = ReactiveCommand.Create<string>(Add);
-
-            ClearCommand = ReactiveCommand.Create(Clear);
-
-            BackSpaceCommand = ReactiveCommand.Create(BackSpace);
-
-            EqualCommand = ReactiveCommand.Create(Equal);
-
-            //HistoryCommand = ReactiveCommand.Create();
-
-            calc = LibraryImport_x64.Constructor();
-
-            
-
-            _history = new ObservableCollection<string>();
-
-            _tokens = new();
-            Clear();
-        }
+       
 
         
-
         private void Equal()
         {
             var exp = TokensToString();
