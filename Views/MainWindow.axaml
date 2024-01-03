@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Calculator3.ViewModels"
         Title="Calculator v3.0"
+		xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
 		MaxWidth="580" MaxHeight="500"
 		MinWidth="580" MinHeight="500"
         d:DesignHeight="500"

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Calculator3.Models
 {
@@ -14,7 +12,7 @@ namespace Calculator3.Models
         }
         
         [DllImport("CalculatorDll.dll")]
-        public static extern Result Test(IntPtr calc, string expression, double x);
+        public static extern Result Calculate(IntPtr calc, string expression, double x);
 
         [DllImport("CalculatorDll.dll")]
         public static extern IntPtr Constructor();        

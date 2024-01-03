@@ -12,7 +12,6 @@ namespace Calculator3.ViewModels
         private ViewModelBase _depositPage;
 
 
-
         public MainWindowViewModel()
         {            
             _calculatorPage = new CalculatorViewModel();            

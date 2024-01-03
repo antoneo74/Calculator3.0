@@ -10,7 +10,8 @@
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
 	</ItemGroup>
-	
+
+
 	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="11.0.2" />
 		<PackageReference Include="Avalonia.Desktop" Version="11.0.2" />
@@ -21,7 +22,13 @@
 		<PackageReference Include="Avalonia.ReactiveUI" Version="11.0.2" />
 		<PackageReference Include="Avalonia.Themes.Simple" Version="11.0.2" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc2" />
+		<PackageReference Include="OxyPlot.Avalonia" Version="2.1.0" />
+		<PackageReference Include="OxyPlot.Core" Version="2.1.2" />
 	</ItemGroup>
+
+
+	
+
 
 	<ItemGroup>
 	  <Folder Include="Documentation\" />

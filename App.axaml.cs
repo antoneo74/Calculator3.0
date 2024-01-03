@@ -10,7 +10,7 @@ namespace Calculator3
     {
         public override void Initialize()
         {
-            AvaloniaXamlLoader.Load(this);
+            AvaloniaXamlLoader.Load(this);            
         }
 
         public override void OnFrameworkInitializationCompleted()

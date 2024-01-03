@@ -3,8 +3,55 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:Calculator3.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 x:DataType="vm:ChartsViewModel"
-			x:Class="Calculator3.Views.ChartsView">
-	Welcome to Avalonia!
+			 mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="460"
+			 MaxWidth="580" MaxHeight="460"
+			 MinWidth="580" MinHeight="460"
+			 Background="#e5ebe9"
+             x:DataType="vm:ChartsViewModel"
+			 xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+			 x:Class="Calculator3.Views.ChartsView">
+	<UserControl.Styles>
+		<Style Selector="TextBlock.Small">
+			<Setter	Property="FontSize" Value="10"/>
+			<Setter Property="FontWeight" Value="Medium"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			
+		</Style>
+	</UserControl.Styles>
+	
+	
+	<DockPanel Margin="10">
+		<StackPanel DockPanel.Dock="Top" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+			<TextBlock VerticalAlignment="Center">Input function expression</TextBlock>
+			<TextBox Margin="15 0" Width="200" Text="{Binding Fun}"></TextBox>
+			<Button Margin="15 0" Command="{Binding Refresh}">Draw</Button>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom">
+			<TextBlock Classes="Small" Text="Min X"/>
+			<TextBox Margin="5 0 15 0" Height="10" />
+			<TextBlock Classes="Small" Text="Max X"/>
+			<TextBox Margin="5 0 15 0"/>
+			<TextBlock Classes="Small" Text="Min Y"/>
+			<TextBox Margin="5 0 15 0"/>
+			<TextBlock Classes="Small" Text="Max Y"/>
+			<TextBox Margin="5 0 15 0"/>
+		</StackPanel>
+		<lvc:CartesianChart
+		  Margin="10"		  
+		  Series="{Binding Series}"
+		  XAxes="{Binding XAxes}"
+		  YAxes="{Binding YAxes}"
+		  DrawMarginFrame="{Binding Frame}"
+		  ZoomMode="Both"
+		  TooltipPosition="Left">
+		</lvc:CartesianChart>
+	</DockPanel>
+
+
+
+
+
+
+
+
 </UserControl>

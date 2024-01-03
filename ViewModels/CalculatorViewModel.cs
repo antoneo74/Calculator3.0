@@ -2,33 +2,47 @@
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reactive;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Diagnostics;
+using System.IO;
 
 namespace Calculator3.ViewModels
 {
-    public class CalculatorViewModel:ViewModelBase
+    public class CalculatorViewModel : ViewModelBase
     {
+        private bool _expIsActive = false;
+
+        private bool _openActive = false;
+
+        private bool _operationActive = false;
+
+        private bool _operandActive = false;
+
         private List<string> _tokens;
 
-        private string _expression;
+        private List<List<string>> _historyTokens;
 
-        private string _xValue;
+        private string _expression = "0";
+
+        private string _xValue = string.Empty;
 
         private int _open_brackets = 0;
 
-        private IntPtr calc;
+        private int _selectedIndex = 0;
 
-        private int _selectedIndex;
+        private IntPtr _calc;
 
         private ObservableCollection<string> _history;
 
         public ReactiveCommand<string, Unit> AddCommand { get; }
+
         public ReactiveCommand<Unit, Unit> ClearCommand { get; }
+
         public ReactiveCommand<Unit, Unit> BackSpaceCommand { get; }
+
         public ReactiveCommand<Unit, Unit> EqualCommand { get; }
 
 
@@ -42,192 +56,522 @@ namespace Calculator3.ViewModels
 
             EqualCommand = ReactiveCommand.Create(Equal);
 
-            //SelectedIndexCommand = ReactiveCommand.Create<int>(Selected);
-
-            calc = LibraryImport_x64.Constructor();
+            _calc = LibraryImport_x64.Constructor();
 
             _history = new ObservableCollection<string>();
 
-            _tokens = new();
+            _tokens = new List<string>();
 
-            Clear();
+            //_historyTokens = new List<string>();
         }
 
-        
         public ObservableCollection<string> History
         {
             get => _history;
-            set => this.RaiseAndSetIfChanged(ref _history, value); 
+            set => this.RaiseAndSetIfChanged(ref _history, value);
         }
-        
-        
+
         public int SelectedIndex
         {
             get => _selectedIndex;
             set => this.RaiseAndSetIfChanged(ref _selectedIndex, value);
         }
-
-        public void SelectHistoryItem()
-        {
-            
-            ShownExpression = History[SelectedIndex];
-        }
-
-
         public string ShownExpression
         {
             get => _expression;
-
             set => this.RaiseAndSetIfChanged(ref _expression, value);
         }
 
-        public string? XValue
+        public string XValue
         {
             get => _xValue;
             set => this.RaiseAndSetIfChanged(ref _xValue, value);
         }
 
-        
-        
-       
+        #region Functions processing button presses
 
-        
-        private void Equal()
+        /// <summary>
+        /// Remove last symbol/function
+        /// </summary>
+        private void BackSpace()
         {
-            var exp = TokensToString();
-
-            
-            History.Add(exp);
-
-            var xIsCorrect = double.TryParse(_xValue, out double x);
-
-            _tokens.Clear();
-
-            _tokens.Add("0");
-
-            XValue = string.Empty;
-
-            if (!xIsCorrect && exp.Contains('X')) { ShownExpression = "Error"; }
-            else
+            if (!_tokens.IsEmpty())
             {
-                var sss = LibraryImport_x64.Test(calc, exp, x);
-
-                if (sss.error)
+                if (_tokens[^1].IsNumber())
                 {
-                    ShownExpression = "Error";
+                    RemoveNumberDigit();
+                    if (!_tokens.IsEmpty() && _tokens[^1].Contains('e'))
+                    {
+                        _tokens[^1] = "e+0";
+                    }
                 }
                 else
                 {
-                    ShownExpression = sss.res.ToString();
+                    _tokens.RemoveAt(_tokens.Count - 1);
                 }
+
+                if (_tokens.Count == 1 && _tokens[^1] == "0") _tokens.Clear();
             }
+            InitFlags();
+
+            ShownExpression = _tokens.IsEmpty() ? "0" : _tokens.ListToString();
         }
 
-        private void BackSpace()
-        {
-            _tokens.RemoveAt(_tokens.Count - 1);
-
-            if (_tokens.Count == 0) { _tokens.Add("0"); }
-
-            ShownExpression = TokensToString();
-        }
-
+        /// <summary>
+        /// Method to reset calculator
+        /// /// Triggered when the button "C" is pressed
+        /// </summary>
         private void Clear()
         {
-            _tokens.Clear();
-
-            _tokens.Add("0");
-
-            _open_brackets = 0;
+            Reset();
 
             ShownExpression = "0";
         }
 
+        /// <summary>
+        /// Method that calls the calculation of the entered expression. 
+        /// Triggered when the button "=" is pressed
+        /// </summary>
+        private void Equal()
+        {
+            AddMissingBrackets();
+
+            var exp = _tokens.ListToString();
+
+            if (exp != string.Empty)
+            {
+                History.Insert(0, exp);
+
+                var xIsCorrect = double.TryParse(_xValue, out double x);
+
+                if (!xIsCorrect && exp.Contains('X')) { ShownExpression = "Error"; }
+                else
+                {
+                    var result = LibraryImport_x64.Calculate(_calc, exp, x);
+
+                    ShownExpression = result.error ? "Error" : Math.Round(result.res, 12).ToString();
+                }
+                Reset();
+            }
+        }
+
+        /// <summary>
+        /// method that adds the value of an object to the resulting expression
+        /// </summary>
+        /// <param name="obj">the value associated with the pressed button</param>
         private void Add(string obj)
         {
-            if (IsEmptyExpression())
+            if (obj.IsNumber())
             {
-                if (CheckEmptyExpression(obj)) _tokens.Add(obj);
+                AddDigit(obj);
             }
             else
             {
-                bool check = true;
                 switch (obj)
                 {
-                    case "(":
-                    case ")":
-                        check = CheckBrackets(obj);
+                    case "e+0":
+                        AddExponenta();
                         break;
-                    case ".e+0":
-                        check = CheckExponenta();
+                    case "(":
+                        AddOpeningBracket();
+                        break;
+                    case ")":
+                        AddClosingBracket();
+                        break;
+                    case ".":
+                        AddDot();
+                        break;
+                    case "-":
+                        AddMinus();
+                        break;
+                    case "+":
+                        AddPlus();
+                        break;
+                    case "X":
+                        AddX();
+                        break;
+                    case "*":
+                    case "/":
+                    case "^":
+                    case "mod":
+                        AddBinaryOperation(obj);
+                        break;
+                    case "sqrt":
+                    case "ln":
+                    case "log":
+                    case "sin":
+                    case "asin":
+                    case "cos":
+                    case "acos":
+                    case "tan":
+                    case "atan":
+                        AddFunction(obj);
                         break;
                 }
-                if (check) _tokens.Add(obj);
             }
-            ShownExpression = TokensToString();
+            InitFlags();
+            ShownExpression = _tokens.IsEmpty() ? "0" : _tokens.ListToString();
         }
 
-        private bool CheckExponenta()
+        /// <summary>
+        /// Displaying the selected history item
+        /// </summary>
+        public void SelectHistoryItem()
         {
-            if (_tokens.Count > 0)
+            if (History.Count != 0)
             {
-                Regex r = new Regex(@"^\d$");
+                _tokens.Clear();
 
-                Match m = r.Match(_tokens.Last());
+                _tokens.Add(History[SelectedIndex]);
 
-                return m.Success;
+                ShownExpression = History[SelectedIndex];
             }
-            return false;
         }
 
-        private bool CheckBrackets(string obj)
+        /// <summary>
+        /// Open documentation web page
+        /// </summary>
+        public void Documentation()
         {
-            switch (obj)
+            var path = Path.Combine(Directory.GetCurrentDirectory(), @"../../../Documentation/index.html");
+
+            var process = new Process();
+
+            process.StartInfo = new ProcessStartInfo(path)
             {
-                case "(":
-                    ++_open_brackets;
-                    break;
-                case ")":
-                    if (_open_brackets > 0) { _open_brackets--; }
-                    else { return false; }
-                    break;
-            }
-            return true;
+                UseShellExecute = true
+            };
+            process.Start();
         }
 
-        private bool CheckEmptyExpression(string obj)
+        /// <summary>
+        /// Clear displaing history
+        /// </summary>
+        public void ClearHistory()
         {
-            switch (obj)
+            History.Clear();
+        }
+        #endregion
+
+        #region functions that implement the rules for displaying input data
+
+        /// <summary>
+        /// Actions if the "." button is pressed
+        /// </summary>
+        private void AddDot()
+        {
+            if (_tokens.IsEmpty() || _tokens[^1].Contains('(') || _operationActive)
             {
-                case ")":
-                    return false;
-                case ".":
-                case "*":
-                case "/":
-                case "^":
-                case ".e+0":
-                    break;
-                default:
-                    _tokens.Clear();
-                    break;
+                _tokens.Add("0.");
             }
-            return true;
+            else if (_expIsActive || (!_tokens[^1].IsNumber() && !_operationActive)
+                || (_tokens.Count > 1 && _tokens[^2].Contains('e')) || _tokens[^1].Contains('.'))
+            {
+                _tokens.Add("*");
+                _tokens.Add("0.");
+            }
+            else
+            {
+                _tokens[^1] += ".";
+            }
+
         }
 
-        public string TokensToString()
+        /// <summary>
+        /// Actions if the any function button (sqrt, ln etc.) is pressed
+        /// </summary>
+        private void AddFunction(string obj)
+        {
+            if (_operandActive)
+            {
+                _tokens.Add("*");
+            }
+            _tokens.Add(obj + "(");
+
+            ++_open_brackets;
+        }
+
+        /// <summary>
+        /// Actions if the any binary operation button (*, /, ^, mod) is pressed
+        /// </summary>
+        private void AddBinaryOperation(string obj)
+        {
+            if (_tokens.IsEmpty())
+            {
+                _tokens.Add("0");
+                _tokens.Add(obj);
+            }
+            else
+            {
+                if (!_operationActive && _operandActive)
+                {
+                    _tokens.Add(obj);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Actions if the button with digit is pressed
+        /// </summary>
+        private void AddDigit(string obj)
+        {
+            if (_expIsActive)
+            {
+                _tokens[^1] = _tokens[^1].Remove(_tokens[^1].Length - 1);
+
+                _tokens.Add(obj);
+            }
+            else if (!_tokens.IsEmpty() && _tokens[^1].IsNumber())
+            {
+                _tokens[^1] += obj;
+            }
+            else if (_operandActive)
+            {
+                _tokens.Add("*");
+
+                _tokens.Add(obj);
+            }
+            else
+            {
+                _tokens.Add(obj);
+            }
+        }
+
+        /// <summary>
+        /// If last token is number remove last digit of the number
+        /// </summary>
+        private void RemoveNumberDigit()
+        {
+            _tokens[^1] = _tokens[^1].Remove(_tokens[^1].Length - 1);
+
+            if (_tokens[^1] == string.Empty)
+            {
+                _tokens.Remove(_tokens[^1]);
+            }
+        }
+
+        /// <summary>
+        /// Actions if the "X" button is pressed
+        /// </summary>
+        private void AddX()
+        {
+            if (!_operationActive && !_tokens.IsEmpty() && !_openActive)
+            {
+                _tokens.Add("*");
+            }
+            _tokens.Add("X");
+        }
+
+        /// <summary>
+        /// Actions if the "+" button is pressed
+        /// </summary>
+        private void AddPlus()
+        {
+            if (_operationActive)
+            {
+                AddOpeningBracket();
+            }
+            _tokens.Add("+");
+        }
+
+        /// <summary>
+        /// Actions if the "-" button is pressed
+        /// </summary>
+        private void AddMinus()
+        {
+            if (_expIsActive)
+            {
+                _tokens[^1] = _tokens[^1] == "e+0" ? "e-0" : "e+0";
+            }
+            else
+            {
+                if (_operationActive)
+                {
+                    AddOpeningBracket();
+                }
+                _tokens.Add("-");
+            }
+        }
+
+        /// <summary>
+        /// Actions if the ")" button is pressed
+        /// </summary>
+        private void AddClosingBracket()
+        {
+            if (!_openActive && _operandActive && _open_brackets != 0)
+            {
+                --_open_brackets;
+                _tokens.Add(")");
+            }
+        }
+
+        /// <summary>
+        /// Actions if the "(" button is pressed
+        /// </summary>
+        private void AddOpeningBracket()
+        {
+            ++_open_brackets;
+            if (!_operationActive && !_tokens.IsEmpty() && !_tokens[^1].Contains('(')) _tokens.Add("*");
+            _tokens.Add("(");
+        }
+
+        /// <summary>
+        /// Actions if the exponenta button is pressed
+        /// </summary>
+        private void AddExponenta()
+        {
+            if (_tokens.IsEmpty())
+            {
+                _tokens.Add("0");
+            }
+            if (_tokens[^1].IsNumber())
+            {
+                if (_tokens.Count == 1)
+                {
+                    _tokens.Add("e+0");
+                }
+                else
+                {
+                    if (!_tokens[^2].Contains('e'))
+                    {
+                        _tokens.Add("e+0");
+                    }
+                    else
+                    {
+                        _tokens.Add("*");
+                        _tokens.Add("0");
+                        _tokens.Add("e+0");
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region Helped functions
+        /// <summary>
+        /// Method adding missing closing brackets
+        /// </summary>
+        private void AddMissingBrackets()
+        {
+            if (!_openActive && _operandActive)
+            {
+                for (int i = 0; i < _open_brackets; --_open_brackets)
+                {
+                    _tokens.Add(")");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reset all flags to default
+        /// </summary>
+        private void ResetAllFlags()
+        {
+            _expIsActive = false;
+
+            _openActive = false;
+
+            _operationActive = false;
+
+            _operandActive = false;
+        }
+
+        /// <summary>
+        /// Setting flags for the current expression
+        /// </summary>
+        private void InitFlags()
+        {
+            ResetAllFlags();
+
+            if (!_tokens.IsEmpty())
+            {
+                if (_tokens[^1].IsNumber())
+                {
+                    _operandActive = true;
+                }
+                else
+                {
+                    switch (_tokens[^1])
+                    {
+                        case "X":
+                        case ")":
+                        case ".":
+                            _operandActive = true;
+                            break;
+                        case "e+0":
+                        case "e-0":
+                            _expIsActive = true;
+                            _operandActive = true;
+                            break;
+                        case "+":
+                        case "-":
+                        case "^":
+                        case "/":
+                        case "*":
+                        case "mod":
+                            _operationActive = true;
+                            break;
+                        default:
+                            _openActive = true;
+                            break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reset to default settings
+        /// </summary>
+        private void Reset()
+        {
+            _tokens.Clear();
+
+            _open_brackets = 0;
+
+            XValue = string.Empty;
+
+            InitFlags();
+        }
+
+        #endregion
+    }
+
+    #region static class with extension methods
+    public static class Extensions
+    {
+        /// <summary>
+        /// Extension method for list of strings
+        /// Make result stringfrom list items
+        /// </summary>
+        public static string ListToString(this List<string> tokens)
         {
             StringBuilder builder = new();
 
-            foreach (var token in _tokens)
-            {
-                builder.Append(token);
-            }
+            tokens.ForEach(tokens => builder.Append(tokens));
+
             return builder.ToString();
         }
 
-        private bool IsEmptyExpression()
+        /// <summary>
+        /// checking list for emptiness
+        /// </summary>
+        /// <returns>true if list empty</returns>
+        public static bool IsEmpty(this List<string> tokens)
         {
-            return _tokens.Count == 1 && _tokens[0] == "0";
+            return tokens.Count == 0;
+        }
+
+        /// <summary>
+        /// Extension method for checking whether argument is number
+        /// </summary>
+        /// <param name="str">checking argument</param>
+        /// <returns>true if argument is number</returns>
+        public static bool IsNumber(this string str)
+        {
+            CultureInfo.CurrentCulture = new CultureInfo("es-ES");
+
+            return double.TryParse(str, NumberStyles.Any, CultureInfo.CurrentCulture, out var _);
         }
     }
+    #endregion
 }

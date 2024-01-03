@@ -38,7 +38,7 @@ namespace s21
 		std::pair<double, bool> GetValueFromStack();
 	};
 
-	extern "C" __declspec(dllexport) Result Test(Calculator * item, const char* str, double x)
+	extern "C" __declspec(dllexport) Result Calculate(Calculator * item, const char* str, double x)
 	{
 		std::string expression(str);
 		return item->Execute(expression, x);
