@@ -11,8 +11,8 @@ namespace s21
 {
 	struct Result
 	{
-		bool error;
-		double res;
+		bool error{ false };
+		double res{ 0 };
 	};
 
 	class Calculator {

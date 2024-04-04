@@ -22,14 +22,14 @@
 	</Design.DataContext>
 
 	<Window.Styles>
-		<Style Selector="TabControl">			
+		<Style Selector="TabControl">
 			<Setter Property="Background" Value="#e5ebe9"/>
 		</Style>
 		<Style Selector="TabItem">
 			<Setter Property="FontSize" Value="18"/>
 			<Setter Property="FontWeight" Value="DemiBold"/>
 		</Style>
-		
+
 	</Window.Styles>
 
 	<TabControl>
@@ -45,6 +45,6 @@
 		<TabItem Header="Deposit">
 			<ContentControl Content="{Binding DepositPage}" />
 		</TabItem>
-	</TabControl>	
+	</TabControl>
 
 </Window>

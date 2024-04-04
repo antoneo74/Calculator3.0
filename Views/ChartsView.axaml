@@ -28,13 +28,13 @@
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom">
 			<TextBlock Classes="Small" Text="Min X"/>
-			<TextBox Margin="5 0 15 0" Height="10" />
+			<TextBox Margin="5 0 15 0" Text="{Binding XMin}" Watermark="-10"/>
 			<TextBlock Classes="Small" Text="Max X"/>
-			<TextBox Margin="5 0 15 0"/>
+			<TextBox Margin="5 0 15 0" Text="{Binding XMax}" Watermark="10"/>
 			<TextBlock Classes="Small" Text="Min Y"/>
-			<TextBox Margin="5 0 15 0"/>
+			<TextBox Margin="5 0 15 0" Text="{Binding YMin}" Watermark="-10"/>
 			<TextBlock Classes="Small" Text="Max Y"/>
-			<TextBox Margin="5 0 15 0"/>
+			<TextBox Margin="5 0 15 0" Text="{Binding YMax}" Watermark="10"/>
 		</StackPanel>
 		<lvc:CartesianChart
 		  Margin="10"		  
