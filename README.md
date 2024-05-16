@@ -4,7 +4,7 @@
 ### Интерфейс
 
 
-![alt text](Assets/1.png)
+<img src="src/Documentation/images/1.png" alt="image1" width="600"/>
 
 1 Вкладка калькулятора
 
@@ -26,13 +26,13 @@
 
 10 Окно ввода значения для переменной Х
 
-![alt text](Assets/2.png)
+<img src="src/Documentation/images/2.png" alt="image1" width="600"/>
 
-![alt text](Assets/3.png)
+<img src="src/Documentation/images/3.png" alt="image1" width="600"/>
 
 ### Вкладка графики
 
-![alt text](Assets/4.png)
+<img src="src/Documentation/images/4.png" alt="image1" width="600"/>
 
-![alt text](Assets/5.png)
+<img src="src/Documentation/images/5.png" alt="image1" width="600"/>
 
