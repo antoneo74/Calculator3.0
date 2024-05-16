@@ -1,230 +1,276 @@
-<UserControl x:Class="Calculator3.Views.CalculatorView"
-             xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:Calculator3.ViewModels"
-			 mc:Ignorable="d" d:DesignWidth="580" d:DesignHeight="460"
-			 MaxWidth="580" MaxHeight="460"
-			 MinWidth="580" MinHeight="460"
-			 Background="#e5ebe9"
-             x:CompileBindings="False"
-             x:DataType="vm:CalculatorViewModel">
+<UserControl
+    x:Class="Calculator3.Views.CalculatorView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Calculator3.ViewModels"
+    MinWidth="580"
+    MinHeight="460"
+    MaxWidth="580"
+    MaxHeight="460"
+    d:DesignHeight="460"
+    d:DesignWidth="580"
+    x:CompileBindings="False"
+    x:DataType="vm:CalculatorViewModel"
+    Background="#e5ebe9"
+    mc:Ignorable="d">
 
-	<Design.DataContext>
-		<!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<vm:CalculatorViewModel/>
-	</Design.DataContext>
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:CalculatorViewModel />
+    </Design.DataContext>
 
-	<UserControl.Styles>
+    <UserControl.Styles>
 
-		<Style Selector="Button">
-			<Setter Property="HorizontalContentAlignment" Value="Center" />
-			<Setter Property="VerticalContentAlignment" Value="Center" />
-			<Setter Property="Height" Value="35" />
-			<Setter Property="BorderThickness" Value="2" />
-			<Setter Property="Background" Value="#eeeeee" />
-			<Setter Property="BorderBrush" Value="Gray" />
-			<Setter Property="FontWeight" Value="Medium"/>
-			<Setter Property="FontSize" Value="15"/>
-		</Style>
+        <Style Selector="Button">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Background" Value="#eeeeee" />
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="15" />
+        </Style>
 
-		<Style Selector="Button.small">
-			<Setter Property="Width" Value="60" />
-			<Setter Property="Command" Value="{Binding AddCommand}"/>
-		</Style>
+        <Style Selector="Button.small">
+            <Setter Property="Width" Value="60" />
+            <Setter Property="Command" Value="{Binding AddCommand}" />
+        </Style>
 
-		<Style Selector="Button.big">
-			<Setter Property="Width" Value="120" />
-		</Style>
+        <Style Selector="Button.big">
+            <Setter Property="Width" Value="120" />
+        </Style>
 
-		<Style Selector="Button.number">
-			<Setter Property="Background" Value="White" />
-		</Style>
+        <Style Selector="Button.number">
+            <Setter Property="Background" Value="White" />
+        </Style>
 
-		<Style Selector="Border">
-			<Setter Property="CornerRadius" Value="5"/>
-			<Setter Property="BoxShadow" Value="5 5 15 3 #b4b4b4" />
-			<Setter Property="Margin" Value="0 0 2 0" />
-		</Style>	
+        <Style Selector="Border">
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="BoxShadow" Value="5 5 15 3 #b4b4b4" />
+            <Setter Property="Margin" Value="0 0 2 0" />
+        </Style>
 
-	</UserControl.Styles>
+    </UserControl.Styles>
 
+    <StackPanel Margin="14">
+        <StackPanel Orientation="Horizontal">
+            <Grid VerticalAlignment="Stretch" RowDefinitions="Auto, Auto, Auto">
+                <Border
+                    Grid.Row="0"
+                    Height="30"
+                    Margin="2,0,0,0">
+                    <Button
+                        Width="80"
+                        Height="30"
+                        Command="{Binding SelectHistoryItem}"
+                        FontSize="10">
+                        select
+                    </Button>
+                </Border>
+                <Border
+                    Grid.Row="1"
+                    Height="30"
+                    Margin="2,3,0,0">
+                    <Button
+                        Width="80"
+                        Height="30"
+                        Command="{Binding Documentation}">
+                        ?
+                    </Button>
+                </Border>
 
-	<StackPanel Margin="14">
-		<StackPanel Orientation="Horizontal">
-			<Grid  RowDefinitions="Auto, Auto, Auto" VerticalAlignment="Stretch">
-				<Border Grid.Row="0" Height="30" Margin="2 0 0 0">
-					<Button FontSize="10" Width="80" Height="30" 
-							Command="{Binding SelectHistoryItem}">select</Button>
-				</Border>
-				<Border Grid.Row="1" Height="30" Margin="2 3 0 0">
-					<Button Width="80" Height="30"
-							Command="{Binding Documentation}">?</Button>
-				</Border>
-				
-				<Border Grid.Row="2" Height="30" Margin="2 3 0 0">
-					<Button FontSize="10" Width="80" Height="30" 
-							Command="{Binding ClearHistory}">clear</Button>
-				</Border>
-			</Grid>
-			
-			<Border BorderBrush="Gray" Width="465" Height="100"
-					BorderThickness="2"
-					Margin="5 0 0 10">
+                <Border
+                    Grid.Row="2"
+                    Height="30"
+                    Margin="2,3,0,0">
+                    <Button
+                        Width="80"
+                        Height="30"
+                        Command="{Binding ClearHistory}"
+                        FontSize="10">
+                        clear
+                    </Button>
+                </Border>
+            </Grid>
 
-				<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-					<ListBox SelectedIndex="{Binding SelectedIndex}" Margin="1" ItemsSource="{Binding History}">
-						<ListBox.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"
-										   FontSize="9"
-										   
-										   TextAlignment="Right"/>
-							</DataTemplate>
-						</ListBox.ItemTemplate>
-					</ListBox>
-				</ScrollViewer>
-			</Border>
-		</StackPanel>
+            <Border
+                Width="465"
+                Height="100"
+                Margin="5,0,0,10"
+                BorderBrush="Gray"
+                BorderThickness="2">
 
-		<Border BorderBrush="Gray"
-				BorderThickness="2"
-				Margin="0 5">
-			<TextBlock Margin="2"
-					   Height="100"
-					   Background="White"
-					   Text="{Binding ShownExpression}"
-					   TextWrapping="Wrap"
-					   TextAlignment="Right" />
-		</Border>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <ListBox
+                        Margin="1"
+                        ItemsSource="{Binding History}"
+                        SelectedIndex="{Binding SelectedIndex}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    FontSize="9"
+                                    Text="{Binding}"
+                                    TextAlignment="Right" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+            </Border>
+        </StackPanel>
 
-		<StackPanel Orientation="Horizontal"
-					Margin="0 0 0 5">
-			<Border>
-				<Button Classes="small , number" CommandParameter="7">7</Button>
-			</Border>
-			<Border>
-				<Button Classes="small , number" CommandParameter="8">8</Button>
-			</Border>
-			<Border>
-				<Button Classes="small , number" CommandParameter="9">9</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="/">/</Button>
-			</Border>
-			<Border>
-				<Button Classes ="big" Command="{Binding ClearCommand}"
-						Background="#f99876">C</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="ln">ln</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="acos">acos</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="cos">cos</Button>
-			</Border>
-		</StackPanel>
+        <Border
+            Margin="0,5"
+            BorderBrush="Gray"
+            BorderThickness="2">
+            <TextBlock
+                Height="100"
+                Margin="2"
+                Background="White"
+                Text="{Binding ShownExpression}"
+                TextAlignment="Right"
+                TextWrapping="Wrap" />
+        </Border>
 
-		<StackPanel Orientation="Horizontal"
-					Margin="0 0 0 5">
-			<Border>
-				<Button Classes="small , number" CommandParameter="4">4</Button>
-			</Border>
-			<Border>
-				<Button Classes="small , number" CommandParameter="5">5</Button>
-			</Border>
-			<Border>
-				<Button Classes="small , number" CommandParameter="6">6</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="*">*</Button>
-			</Border>
-			<Border>
-				<Button Classes ="big" Command="{Binding BackSpaceCommand}"
-						Background="Aquamarine">BackSpace</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="log">log</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="asin">asin</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="sin">sin</Button>
-			</Border>
-		</StackPanel>
+        <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
+            <Border>
+                <Button Classes="small , number" CommandParameter="7">7</Button>
+            </Border>
+            <Border>
+                <Button Classes="small , number" CommandParameter="8">8</Button>
+            </Border>
+            <Border>
+                <Button Classes="small , number" CommandParameter="9">9</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="/">/</Button>
+            </Border>
+            <Border>
+                <Button
+                    Background="#f99876"
+                    Classes="big"
+                    Command="{Binding ClearCommand}">
+                    C
+                </Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="ln">ln</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="acos">acos</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="cos">cos</Button>
+            </Border>
+        </StackPanel>
 
-		<StackPanel Orientation="Horizontal"
-					Margin="0 0 0 5">
-			<Border>
-				<Button Classes="small , number" CommandParameter="1">1</Button>
-			</Border>
-			<Border>
-				<Button Classes="small , number" CommandParameter="2">2</Button>
-			</Border>
-			<Border>
-				<Button Classes="small , number" CommandParameter="3">3</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="+">+</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="sqrt">sqrt</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="mod">mod</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="e+0">exp</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="atan">atan</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="tan">tan</Button>
-			</Border>
-		</StackPanel>
+        <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
+            <Border>
+                <Button Classes="small , number" CommandParameter="4">4</Button>
+            </Border>
+            <Border>
+                <Button Classes="small , number" CommandParameter="5">5</Button>
+            </Border>
+            <Border>
+                <Button Classes="small , number" CommandParameter="6">6</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="*">*</Button>
+            </Border>
+            <Border>
+                <Button
+                    Background="Aquamarine"
+                    Classes="big"
+                    Command="{Binding BackSpaceCommand}">
+                    BackSpace
+                </Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="log">log</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="asin">asin</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="sin">sin</Button>
+            </Border>
+        </StackPanel>
 
-		<StackPanel Orientation="Horizontal"
-					Margin="0 0 0 5">
-			<Border>
-				<Button Classes="small" CommandParameter=".">.</Button>
-			</Border>
-			<Border>
-				<Button Classes="small , number" CommandParameter="0">0</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="^">^</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="-">-</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="(">(</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter=")">)</Button>
-			</Border>
-			<Border>
-				<Button Classes="small" CommandParameter="X">X</Button>
-			</Border>
-			<Border>
-				<TextBox Width="122" Watermark="Input X value"
-						 Background="White"
-						 Text="{Binding XValue, Mode=TwoWay}"> </TextBox>
-			</Border>
-		</StackPanel>
+        <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
+            <Border>
+                <Button Classes="small , number" CommandParameter="1">1</Button>
+            </Border>
+            <Border>
+                <Button Classes="small , number" CommandParameter="2">2</Button>
+            </Border>
+            <Border>
+                <Button Classes="small , number" CommandParameter="3">3</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="+">+</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="sqrt">sqrt</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="mod">mod</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="e+0">exp</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="atan">atan</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="tan">tan</Button>
+            </Border>
+        </StackPanel>
 
-		<StackPanel>
-			<Border>
-				<Button Content="=" Width="552" Background="#fff5d5"
-						Command="{Binding EqualCommand}"></Button>
-			</Border>
-		</StackPanel>
-	</StackPanel>
+        <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
+            <Border>
+                <Button Classes="small" CommandParameter=".">.</Button>
+            </Border>
+            <Border>
+                <Button Classes="small , number" CommandParameter="0">0</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="^">^</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="-">-</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="(">(</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter=")">)</Button>
+            </Border>
+            <Border>
+                <Button Classes="small" CommandParameter="X">X</Button>
+            </Border>
+            <Border>
+                <TextBox
+                    Width="122"
+                    Background="White"
+                    Text="{Binding XValue, Mode=TwoWay}"
+                    Watermark="Input X value" />
+            </Border>
+        </StackPanel>
+
+        <StackPanel>
+            <Border>
+                <Button
+                    Width="552"
+                    Background="#fff5d5"
+                    Command="{Binding EqualCommand}"
+                    Content="=" />
+            </Border>
+        </StackPanel>
+    </StackPanel>
 
 </UserControl>

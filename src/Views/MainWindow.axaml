@@ -1,50 +1,55 @@
-<Window x:Class="Calculator3.Views.MainWindow"
-        xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:Calculator3.ViewModels"
-        Title="Calculator v3.0"
-		xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
-		MaxWidth="580" MaxHeight="500"
-		MinWidth="580" MinHeight="500"
-        d:DesignHeight="500"
-        d:DesignWidth="580"
-        x:CompileBindings="False"
-        x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        mc:Ignorable="d">
+<Window
+    x:Class="Calculator3.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Calculator3.ViewModels"
+    Title="Calculator v3.0"
+    MinWidth="580"
+    MinHeight="520"
+    MaxWidth="580"
+    MaxHeight="520"
+    d:DesignHeight="520"
+    d:DesignWidth="580"
+    x:CompileBindings="False"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    mc:Ignorable="d">
 
-	<Design.DataContext>
-		<!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<vm:MainWindowViewModel/>
-	</Design.DataContext>
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
 
-	<Window.Styles>
-		<Style Selector="TabControl">
-			<Setter Property="Background" Value="#e5ebe9"/>
-		</Style>
-		<Style Selector="TabItem">
-			<Setter Property="FontSize" Value="18"/>
-			<Setter Property="FontWeight" Value="DemiBold"/>
-		</Style>
+    </Design.DataContext>
 
-	</Window.Styles>
+    <Window.Styles>
+        <Style Selector="TabControl">
+            <Setter Property="Background" Value="#e5ebe9" />
+        </Style>
+        <Style Selector="TabItem">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="DemiBold" />
+        </Style>
 
-	<TabControl>
-		<TabItem Header="Calculator">
-			<ContentControl Width="580" Content="{Binding CalculatorPage}" />
-		</TabItem>
-		<TabItem Header="Charts">
-			<ContentControl Content="{Binding ChartsPage}" />
-		</TabItem>
-		<TabItem Header="Credit">
-			<ContentControl Content="{Binding CreditPage}" />
-		</TabItem>
-		<TabItem Header="Deposit">
-			<ContentControl Content="{Binding DepositPage}" />
-		</TabItem>
-	</TabControl>
+    </Window.Styles>
+
+    <TabControl>
+        <TabItem Header="Calculator">
+            <ContentControl Width="580" Content="{Binding CalculatorPage}" />
+        </TabItem>
+        <TabItem Header="Charts">
+            <ContentControl Content="{Binding ChartsPage}" />
+        </TabItem>
+        <TabItem Header="Credit">
+            <ContentControl Content="{Binding CreditPage}" />
+        </TabItem>
+        <TabItem Header="Deposit">
+            <ContentControl Content="{Binding DepositPage}" />
+        </TabItem>
+    </TabControl>
 
 </Window>

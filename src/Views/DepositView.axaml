@@ -1,8 +1,327 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Calculator3.Views.DepositView">
-  Welcome to depos!
+<UserControl
+    x:Class="Calculator3.Views.DepositView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="using:Calculator3.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Calculator3.ViewModels"
+    MinWidth="580"
+    MinHeight="460"
+    d:DesignHeight="460"
+    d:DesignWidth="580"
+    x:DataType="vm:DepositViewModel"
+    Background="#e5ebe9"
+    mc:Ignorable="d">
+
+    <UserControl.Styles>
+        <Style Selector="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </UserControl.Styles>
+
+    <SplitView
+        Margin="0,10,0,0"
+        CompactPaneLength="0"
+        DisplayMode="Overlay"
+        IsPaneOpen="{Binding IsOpen}"
+        OpenPaneLength="580">
+        <StackPanel>
+            <Grid
+                Margin="20,10,20,0"
+                ColumnDefinitions="* 2* 2* 2* *"
+                RowDefinitions="auto auto auto auto auto auto *">
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Command="{Binding SideBarOpenCommand}">
+                    <PathIcon Data="{StaticResource arrow_maximize_regular}" />
+                </Button>
+                <TextBlock Grid.Row="0" Grid.Column="1">
+                    Deposit amount
+                </TextBlock>
+                <TextBox
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Text="{Binding Amount}"
+                    Watermark="0" />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Width="100"
+                    Margin="15,0,0,0"
+                    HorizontalContentAlignment="Center"
+                    Command="{Binding CalculateCommand}">
+                    Calculate
+                </Button>
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0,15,0,0">
+                    Deposit term
+                </TextBlock>
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Margin="0,15,0,0"
+                    Text="{Binding Term}"
+                    Watermark="0" />
+                <ComboBox
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Width="100"
+                    Margin="15,15,0,0"
+                    MaxDropDownHeight="100"
+                    SelectedIndex="{Binding TimeUnit}">
+                    <ComboBoxItem>Years</ComboBoxItem>
+                    <ComboBoxItem>Months</ComboBoxItem>
+                    <ComboBoxItem>Days</ComboBoxItem>
+                </ComboBox>
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="0,15,0,0">
+                    Start of term
+                </TextBlock>
+                <CalendarDatePicker
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Width="165"
+                    Margin="0,15,0,0"
+                    CustomDateFormatString="dd/MM/yyyy"
+                    SelectedDate="{Binding Start}"
+                    SelectedDateFormat="Custom"
+                    Watermark="dd/MM/yyyy" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="0,15,0,0">
+                    The interest rate
+                </TextBlock>
+                <TextBox
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Margin="0,15,0,0"
+                    Text="{Binding Rate}"
+                    Watermark="0" />
+                <CheckBox
+                    Grid.Row="3"
+                    Grid.Column="3"
+                    Grid.ColumnSpan="2"
+                    Margin="15,15,0,0"
+                    IsChecked="{Binding Capitalization}">
+                    Interest capitalization
+                </CheckBox>
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="0,15,0,0">
+                    Payment frequency
+                </TextBlock>
+                <ComboBox
+                    Grid.Row="5"
+                    Grid.Column="2"
+                    Width="135"
+                    Margin="30,15,0,0"
+                    MaxDropDownHeight="100"
+                    SelectedIndex="{Binding Frequency}">
+                    <ComboBoxItem>At the end of the term</ComboBoxItem>
+                    <ComboBoxItem>Daily</ComboBoxItem>
+                    <ComboBoxItem>Weekly</ComboBoxItem>
+                    <ComboBoxItem>Monthly</ComboBoxItem>
+                    <ComboBoxItem>Quarterly</ComboBoxItem>
+                    <ComboBoxItem>Half-yearly</ComboBoxItem>
+                    <ComboBoxItem>Yearly</ComboBoxItem>
+                </ComboBox>
+
+            </Grid>
+            <Border
+                Margin="0,15,0,10"
+                BorderBrush="Gray"
+                BorderThickness="1" />
+            <Grid ColumnDefinitions="* 1.5* 1.5* 1.5* 1.5* *" RowDefinitions="auto auto auto">
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,15">
+                    Replenishment / Withdrawal
+                </TextBlock>
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    Width="30"
+                    Height="30"
+                    Margin="40,0,0,5"
+                    Command="{Binding ResetCommand}">
+                    <PathIcon Data="{StaticResource arrow_sync_circle_regular}" />
+                </Button>
+                <ComboBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Width="100"
+                    FontSize="11"
+                    SelectedIndex="{Binding ReplenishmentOperation}">
+                    <ComboBox.Items>Replenishment</ComboBox.Items>
+                    <ComboBox.Items>Withdrawal</ComboBox.Items>
+                </ComboBox>
+                <CalendarDatePicker
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    CustomDateFormatString="dd/MM/yyyy"
+                    SelectedDate="{Binding ReplenishmentDate, }"
+                    SelectedDateFormat="Custom"
+                    Watermark="dd/MM/yyyy" />
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Margin="8,0,0,0"
+                    VerticalContentAlignment="Center"
+                    FontSize="11"
+                    Text="{Binding ReplenishmentAmount}"
+                    Watermark="0" />
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    Width="100"
+                    Margin="8,0,0,0"
+                    HorizontalContentAlignment="Center"
+                    Command="{Binding AddCommand}"
+                    Content="Add" />
+
+                <DataGrid
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="4"
+                    Height="100"
+                    Margin="0,5"
+                    AutoGenerateColumns="False"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    CanUserResizeColumns="True"
+                    GridLinesVisibility="All"
+                    IsReadOnly="True"
+                    IsVisible="{Binding Visibility}"
+                    ItemsSource="{Binding Replenishments}">
+
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="auto" Header="Action">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Background="{Binding Operation, Converter={x:Static conv:FuncValueConverters.BackGroundConverter}}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Operation, Converter={x:Static conv:FuncValueConverters.TextConverter}}" />
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding Date, StringFormat={}{0:dd.MM.yyyy}}"
+                            FontSize="10"
+                            Header="Date" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding Amount}"
+                            FontSize="10"
+                            Header="Monthly Payment" />
+                    </DataGrid.Columns>
+
+                </DataGrid>
+            </Grid>
+        </StackPanel>
+        <SplitView.Pane>
+            <StackPanel Margin="20,10,20,0">
+                <Border
+                    Background="#F5F5F5"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    CornerRadius="5 5 0 0">
+
+                    <Grid ColumnDefinitions="15*, 35*, 35*, 15*" RowDefinitions="30 30 30">
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Command="{Binding SideBarOpenCommand}">
+                            <PathIcon Data="{StaticResource arrow_minimize_regular}" />
+                        </Button>
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Text="Accrued Interest" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Text="{Binding AccuredInterest}" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Text="Balance" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Text="{Binding Total}" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Text="Tax" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Text="{Binding Tax}" />
+                    </Grid>
+                </Border>
+                <DataGrid
+                    Height="350"
+                    AutoGenerateColumns="False"
+                    BorderBrush="Gray"
+                    BorderThickness="1"
+                    CanUserResizeColumns="True"
+                    GridLinesVisibility="All"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding ListItems}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Width="auto"
+                            Binding="{Binding Date, StringFormat={}{0:dd.MM.yyyy}}"
+                            FontSize="10"
+                            Header="Date" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding Percent}"
+                            FontSize="10"
+                            Header="Accrued Interest" />
+
+                        <DataGridTemplateColumn Width="*" Header="Change Balance">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Background="{Binding ChangeBalance, Converter={x:Static conv:FuncValueConverters.ChangeBalanceConverter}}">
+                                        <TextBlock FontSize="10" Text="{Binding ChangeBalance}" />
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+
+                        </DataGridTemplateColumn>
+
+
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding Balance}"
+                            FontSize="10"
+                            Header="Balance" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </SplitView.Pane>
+    </SplitView>
 </UserControl>

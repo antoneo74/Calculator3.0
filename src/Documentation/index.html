@@ -1,36 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Руководство</title>
     <script src="script.js" defer></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="d-flex justify-content-between">
+          <div>
+            <a class="header-text text-center" href="#">Калькулятор</a>
+          </div>
+          <div>
+            <a class="header-text text-center" href="#">Графики</a>
+          </div>
+          <div>
+            <a class="header-text text-center" href="#"
+              >Кредитный калькулятор</a
+            >
+          </div>
+          <div>
+            <a class="header-text text-center" href="#"
+              >Депозитный калькулятор</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+    <div
+      class="container"
+      style="background-color: rgb(238, 238, 238); "
+    >
+      <br /><br />
 
-    <div id="card-item">
-        <div class="card" card = "1">
-            <p>130 руб</p>
+      <h5 class="text">Калькулятор:</h5>
+      <br />
+      <div class="row">
+        <div class="col-6">
+          <img src="images/1.png" alt="image" />
         </div>
-        <div class="card" card = "2">
-            <p>210 руб</p>
+        <div class="col-6">
+          <ol>
+            <li>Вкладка калькулятора</li>
+            <li>Вкладка отображения графиков</li>
+            <li>Вкладка кредитного калькулятора</li>
+            <li>Вкладка депозитного калькулятора</li>
+            <li>Кнопка выбора выражения из окна истории(8)</li>
+            <li>Кнопка вызова мануала</li>
+            <li>Очистка окна истории(8)</li>
+            <li>Окно истории</li>
+            <li>Окно отображения текущего выражения</li>
+            <li>Окно ввода значения для переменной <span style="color: black !important; font-weight: bold;">X</span></li>
+          </ol>
         </div>
-        <div class="card" card = "3">
-            <p>195 руб</p>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-6">
+          <img src="images/2.png" alt="image" />
         </div>
-        <div class="card" card = "4">
-            <p>187 руб</p>
+        <div class="col-6">
+          <li>Расчет введенного выражения производится после нажатия кнопки [=]</li>
+          <li>Если в расчете используется переменная <span style="color: black !important; font-weight: bold;">X</span> необходимо ввести значение для нее в поле (10)</li>
+          <li>В окне (8) отображается история последних операций. Чтобы повторить расчет, нужно выбрать интересующую операцию и нажать кнопку select (5).</li>
+          <li>При нажатии на кнопку clear (7) происходит очистка истории</li>
+          <li>Кнопка ? (6) вызывает текущее руководство</li>
         </div>
-        <div class="card" card = "5">
-            <p>250 руб</p>
-        </div>
-        <div class="card" card = "6">
-            <p>110 руб</p>
-        </div>
+      </div> 
+
+
+
+
+
     </div>
-
-    <button onclick="ShowCard()" id="Sort">Сортировать</button>
     
-</body>
+    <script src="js/bootstrap.js"></script>
+  </body>
 </html>

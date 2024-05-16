@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Calculator3.Models
+namespace Calculator3.Models.Calculator
 {
-    public class LibraryImport_x64
+    public class LibraryImport
     {
         public struct Result
         {
             public bool error;
             public double res;
         }
-        
-        [DllImport("CalculatorDll.dll")]
+
+        [DllImport("CalculatorDll")]
         public static extern Result Calculate(IntPtr calc, string expression, double x);
 
-        [DllImport("CalculatorDll.dll")]
-        public static extern IntPtr Constructor();        
+        [DllImport("CalculatorDll")]
+        public static extern IntPtr Constructor();
     }
 }
