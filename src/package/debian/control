@@ -1,0 +1,19 @@
+Source: calculator3
+Section: httpd     
+Priority: optional
+Maintainer: anton <anton@anton.mail>
+Uploaders: anton <anton@anton.mail>
+Build-Depends: debhelper (>= 9),
+               cmake,          
+               libstdc++6,     
+Standards-Version: 4.3.0       
+Homepage: https://anton.com       
+
+Package: calculator3
+Architecture: amd64
+Depends: lsb-base (>= 3.0-6),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Provides: calculator3
+Description: test appl
+

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Руководство</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+  </head>
+  <body>
+    <header id="menu">
+      <div class="container">
+        <div class="d-flex justify-content-between">
+          <div>
+            <a class="header-text text-center" href="#calc">Калькулятор</a>
+          </div>
+          <div>
+            <a class="header-text text-center" href="#graph">Графики</a>
+          </div>
+          <div>
+            <a class="header-text text-center" href="#credit"
+              >Кредитный калькулятор</a
+            >
+          </div>
+          <div>
+            <a class="header-text text-center" href="#deposit"
+              >Депозитный калькулятор</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="container" style="background-color: rgb(238, 238, 238)">
+      <br /><br />
+
+      <h5 id="calc" class="text">Калькулятор:</h5>
+      <br />
+      <div class="row">
+        <div class="col-6">
+          <img src="images/1.png" alt="image" />
+        </div>
+        <div class="col-6">
+          <ol>
+            <li>Вкладка калькулятора</li>
+            <li>Вкладка отображения графиков</li>
+            <li>Вкладка кредитного калькулятора</li>
+            <li>Вкладка депозитного калькулятора</li>
+            <li>Кнопка выбора выражения из окна истории(8)</li>
+            <li>Кнопка вызова мануала</li>
+            <li>Очистка окна истории(8)</li>
+            <li>Окно истории</li>
+            <li>Окно отображения текущего выражения</li>
+            <li>
+              Окно ввода значения для переменной
+              <span style="color: black !important; font-weight: bold">X</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <br /><br />
+      <div class="row">
+        <div class="col-6">
+          <img src="images/2.png" alt="image" />
+        </div>
+        <div class="col-6">
+          <li>
+            Расчет введенного выражения производится после нажатия кнопки [=]
+          </li>
+          <li>
+            Если в расчете используется переменная
+            <span style="color: black !important; font-weight: bold">X</span>
+            необходимо ввести значение для нее в поле (10)
+          </li>
+          <li>
+            В окне (8) отображается история последних операций. Чтобы повторить
+            расчет, нужно выбрать интересующую операцию и нажать кнопку select
+            (5).
+          </li>
+          <li>При нажатии на кнопку clear (7) происходит очистка истории</li>
+          <li>Кнопка ? (6) вызывает текущее руководство</li>
+        </div>
+      </div>
+
+      <br /><br />
+      <div class="row">
+        <div class="col-6">
+          <img src="images/3.png" alt="image" />
+        </div>
+        <div class="col-6"></div>
+      </div>
+
+      <br />
+      <a class="text" href="#menu"> Назад к меню </a>
+
+      <br /><br />
+
+      <h5 id="graph" class="text">Графики:</h5>
+      <br />
+      <div class="row">
+        <div class="col-6">
+          <img src="images/4.png" alt="image" />
+        </div>
+        <div class="col-6">
+          <ol>
+            <li>Окно ввода выражения функции</li>
+            <li>Кнопка отрисовки графика функции</li>
+            <li>Окно отрисовки графика функции</li>
+            <li>Минимальное отображаемое значение по оси X</li>
+            <li>Максимальное отображаемое значение по оси X</li>
+            <li>Минимальное отображаемое значение по оси Y</li>
+            <li>Максимальное отображаемое значение по оси Y</li>
+          </ol>
+        </div>
+      </div>
+      <br /><br />
+
+      <div class="row">
+        <div class="col-6">
+          <img src="images/5.png" alt="image" />
+        </div>
+        <div class="col-6">
+          <li>По умолчанию диапазон по осям от -10 до 10</li>
+        </div>
+      </div>
+      <br />
+      <a class="text" href="#menu"> Назад к меню </a>
+
+      <br /><br />
+
+      <h5 id="credit" class="text">Кредитный калькулятор:</h5>
+      <br />
+      <div class="row">
+        <div class="col-6">
+          <img src="images/6.png" alt="image" />
+        </div>
+        <div class="col-6">
+          <ol>
+            <li>Окно ввода суммы кредита</li>
+            <li>Окно ввода длительности кредита</li>
+            <li>Окно ввода ставки кредита</li>
+            <li>Кнопка расчета кредита</li>
+            <li>Выбор единицы измерения длительности кредита</li>
+            <li>Выбор кредита с аннуитетными платежами</li>
+            <li>Выбор кредита с дифференцированными платежами</li>
+            <li>Кнопка перехода к окну* с результатами расчета</li>
+          </ol>
+          <p class="text">
+            * открывается автоматически при нажатии кнопки расчета(4)
+          </p>
+        </div>
+      </div>
+      <br /><br />
+      <div class="row">
+        <div class="col-6">
+          <img src="images/7.png" alt="image" />
+        </div>
+        <div class="col-6">
+          <li>Максимальная сумма кредита ограничена 1 000 000 000=</li>
+          <li>Доступные единицы времени длительности кредита (Месяц/Год)</li>
+          <li>
+            Максимальная длительность ограничена:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;если
+            выбран Месяц - 600,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;если выбран
+            Год - 50
+          </li>
+          <li>Максимальная ставка ограничена числом 999</li>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <img src="images/8.png" alt="image" />
+        </div>
+        <div class="col-6">
+          <ol>
+            <li>Кнопка возврата в главное окно кредитного калькулятора</li>
+            <li>
+              Ежемесячные платежи<br />если выбраны аннуитетные платежи -
+              значение,<br />если выбраны дифференцированные платежи - диапазон
+              значений от начального до конечного расчетного периода
+            </li>
+            <li>Сумма начисленных процентов</li>
+            <li>Сумма кредита + начисленные проценты</li>
+            <li>Столбец с номером расчетного периода по порядку</li>
+            <li>Столбец расчетного периода</li>
+            <li>Ежемесячный платеж по кредиту</li>
+            <li>Ежемесячный платеж по телу кредита</li>
+            <li>Ежемесячный платеж по процентам</li>
+            <li>Остаток кредита</li>
+          </ol>
+        </div>
+      </div>
+      <br />
+      <a class="text" href="#menu"> Назад к меню </a>
+
+      <br /><br />
+
+      <h5 id="deposit" class="text">Депозитный калькулятор:</h5>
+      <br />
+      <div class="row">
+        <div class="col-6">
+          <img src="images/9.png" alt="image" />
+        </div>
+        <div class="col-6">
+          <ol>
+            <li>Кнопка перехода к окну* с результатами расчета</li>
+            <li>Окно ввода суммы депозита</li>
+            <li>Окно ввода длительности депозита</li>
+            <li>Кнопка расчета депозита</li>
+            <li>Выбор единицы измерения длительности депозита</li>
+            <li>Окно выбора начала депозита</li>
+            <li>Окно ввода ставки депозита</li>
+            <li>Чекбокс будет ли депозит с капитализацией процентов</li>
+            <li>Выбор периодичности выплат процентов</li>
+            <li>Выбор пополнения/снятия депозита</li>
+            <li>Выбор даты пополнения/снятия депозита</li>
+            <li>Выбор суммы пополнения/снятия депозита</li>
+            <li>Кнопка сброса выбранных пополнений/снятий депозита</li>
+            <li>Кнопка добавления пополнения/снятия депозита</li>
+          </ol>
+          <p class="text">
+            * открывается автоматически при нажатии кнопки расчета(4)
+          </p>
+        </div>
+      </div>
+      <br /><br />
+      <div class="row">
+        <div class="col-6">
+          <img src="images/10.png" alt="image" />
+        </div>
+        <div class="col-6">
+          <li>Максимальная сумма депозита ограничена 1 000 000 000=</li>
+          <li>
+            Доступные единицы времени длительности депозита (День/Месяц/Год)
+          </li>
+          <li>
+            Максимальная длительность ограничена:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;если
+            выбран День - 18250,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;если выбран
+            Месяц - 600,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;если выбран Год - 50
+          </li>
+          <li>Максимальная ставка ограничена числом 999</li>
+          <li>
+            Доступная периодичность выплат процентов:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;В
+            конце срока<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ежедневно<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Раз
+            в неделю<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Раз в месяц<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Раз
+            в квартал<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Раз в полгода<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Раз
+            в год
+          </li>
+        </div>
+      </div>
+      <br /><br />
+      <div class="row">
+        <div class="col-6">
+          <img src="images/11.png" alt="image" />
+        </div>
+        <div class="col-6">
+          <ol>
+            <li>Кнопка возврата в главное окно депозитного калькулятора</li>
+            <li>Сумма начисленных процентов</li>
+            <li>Баланс депозита на конец вклада</li>
+            <li>Сумма начисленных налогов</li>
+            <li>Дата (расчетный период, снятие/пополнение депозита)</li>
+            <li>Начисленные проценты за расчетный период</li>
+            <li>
+              Изменение баланса депозита (Снятие/капитализация процентов,
+              снятие/пополнение депозита)
+            </li>
+            <li>Баланс депозита на указанную дату</li>
+          </ol>
+        </div>
+      </div>
+      <br />
+      <a class="text" href="#menu"> Назад к меню </a>
+
+      <br /><br />
+    </div>
+
+    <script src="js/bootstrap.js"></script>
+  </body>
+</html>

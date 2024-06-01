@@ -1,0 +1,18 @@
+#!/usr/bin/make -f
+export DH_VERBOSE=1
+
+%:
+	dh $@ --parallel
+
+.NOTPARALLEL: build
+.PHONY: build
+
+override_dh_auto_build: build
+override_dh_strip:
+override_dh_clean:
+
+clean:
+	echo ok
+
+build:
+	echo ok

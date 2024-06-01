@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Calculator 3.0
+Exec=/usr/bin/calculator/Calculator3
+Display=true
+Icon=/usr/share/icons/calculator.svg
+Type=Application
+Categories=Application;
+MimeType=text/html
+Comment=Management calculator 3.0
+Keywords=calculator;credit;deposit;charts;

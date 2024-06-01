@@ -1,0 +1,14 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
+
+PROJECT(CalculatorDll VERSION 1.0.0.0 LANGUAGES CXX)
+
+SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
+# Collect header & source files.
+FILE(GLOB_RECURSE ALL_SOURCES *.cc *.h)
+
+# Add shared library project.
+ADD_LIBRARY(${PROJECT_NAME} SHARED
+${ALL_SOURCES})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")

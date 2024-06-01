@@ -1,0 +1,4 @@
+ net6.0/*.* net6.0/Calculator3 usr/bin/calculator
+ documentation/* usr/documentation
+ calculator.svg usr/share/icons
+ calculator3.desktop usr/share/applications

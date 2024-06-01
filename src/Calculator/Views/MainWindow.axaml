@@ -1,0 +1,63 @@
+<Window
+    x:Class="Calculator3.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+    xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+    xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Calculator3.ViewModels"
+    Title="Calculator v3.0"
+    MinWidth="580"
+    MinHeight="520"
+    MaxWidth="580"
+    MaxHeight="520"
+    d:DesignHeight="520"
+    d:DesignWidth="580"
+    x:CompileBindings="False"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    mc:Ignorable="d">
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+
+    </Design.DataContext>
+
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Closing" SourceObject="{Binding ElementName=Window}">
+            <ia:InvokeCommandAction Command="{Binding ExitCommand}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <Window.Styles>
+        <Style Selector="TabControl">
+            <Setter Property="Background" Value="#e5ebe9" />
+        </Style>
+        <Style Selector="TabItem">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="DemiBold" />
+        </Style>
+
+    </Window.Styles>
+
+    <TabControl>
+        <TabItem Header="Calculator">
+            <ContentControl Width="580" Content="{Binding CalculatorPage}" />
+        </TabItem>
+        <TabItem Header="Charts">
+            <ContentControl Content="{Binding ChartsPage}" />
+        </TabItem>
+        <TabItem Header="Credit">
+            <ContentControl Content="{Binding CreditPage}" />
+        </TabItem>
+        <TabItem Header="Deposit">
+            <ContentControl Content="{Binding DepositPage}" />
+        </TabItem>
+    </TabControl>
+
+</Window>
